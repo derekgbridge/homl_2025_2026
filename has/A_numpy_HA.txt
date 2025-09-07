@@ -1,0 +1,148 @@
+<<<H
+Hint. If `y` contains at least one float, then NumPy will infer the type of the array to be float.
+<<<A
+# Answer
+
+y = np.array([2.0, 4, 7, 9, 1, 6, 3, 3, 0, 2]) # I made the first element a float. You could make them all floats.
+<<<H
+Hint. See how we displayed the type of `x`.
+<<<A
+# Answer 
+
+y.dtype
+<<<H
+Hint. See how we displayed the contents of `x`.
+<<<A
+# Answer
+
+y
+<<<H
+Hint. See how we displayed the contents of `x` or how we looked at its `dtype`.
+<<<A
+# Answer
+
+z # Displaying the contents will show you that they are floats. Alternatively use z.dtype
+<<<H
+Hint. `dtype=int`.
+<<<A
+# Answer
+
+u = np.zeros(12, dtype=int)
+<<<H
+Hint. `step = 2` but be careful about the value of `stop`.
+<<<A
+# Answer
+
+w = np.arange(-100, 101, step=2)
+
+w
+<<<H
+Hint. You need to work out how many even numbers there are between -100 and +100. You will also need to specify the `dtype` in order to avoid NumPy giving the default `dtype`.
+<<<A
+# Answer
+
+evens = np.linspace(-100, 100, num=101, dtype=int)
+
+evens
+<<<H
+Hint. The shape must be a tuple, `(5, 4)`. There's no need to specify the `dtype` because float is the default.
+<<<A
+# Answer
+
+B = np.zeros((5, 4))
+
+B
+<<<H
+Hint. The best solution uses negative numbers in the slices.
+<<<A
+# Answer
+
+# The folowing works:
+# A[:2, :3]
+
+# But this is better because it's more general:
+A[:-1, :-1]
+<<<H
+Hint. The key is to supply the new shape. Think about what a one-dimensional shape looks like.
+<<<A
+# Answer
+
+# One possible answer - remember that shapes are tuples
+# A.reshape( (12, ) )
+
+# A more general answer
+#A.reshape( (A.size, ) ) 
+
+# But this also works
+# A.reshape( 12 )
+
+# And therefore so does this
+A.reshape(A.size)
+<<<H
+Hint. Even numbers are divisible by 2. You will use remainder (modulus, `%`) as well as equality (`==`).
+<<<A
+# Answer
+
+(x % 2) == 0
+<<<H
+Hint. In the first expression `np.arange` gives you the array. Choose the `start` and `stop` values carefully. And then in the second expression you'll want `%`, `==` and `&` operators.
+<<<A
+# Answer
+
+a = np.arange(1, 101) # Note the start and stop values.
+
+(a % 3 == 0) & (a % 5 == 0)
+<<<H
+Hint. Use your anwer to the earlier exercise as a Boolean index.
+<<<A
+# Answer
+
+x[ (x % 2) == 0 ]
+<<<H
+Hint. You will need three `np.where' expressions - nested one within the other. I would test for "fizzbuzz" first.
+<<<A
+# Answer
+
+a = np.arange(1, 101)
+np.where((a % 3 == 0) & (a % 5 == 0), "fizzbuzz", np.where(a % 3 == 0, "fizz", np.where(a % 5 == 0, "buzz", a)))
+<<<H
+Hint. You need a loop. Each time round the loop you are adding the next element to the running total, and putting that running total into the result.
+<<<A
+# Answer
+
+"""
+If you wanted to do it with a list comprehension, you need the walrus operator (which you may not have encountered before):
+
+def cumsumlist(in_list):
+    total = 0
+    return [total := total + v for v in in_list]
+
+Below is a more conventional solution:
+"""
+
+def cumsumlist(in_list):
+    out_list = []
+    total = 0
+    for v in in_list:
+        total += v
+        out_list.append(total) 
+    return out_list
+
+"""
+You could write 
+        out_list = out_list + [total] 
+or 
+        out_list.insert(len(out_list), total) 
+in place of
+        out_list.append(total)
+but they are slower.
+"""
+
+print( cumsumlist([1, 2, 3]) )
+print( cumsumlist([0, 1, -1, 2, -2, 3, -3]) )
+<<<H
+Hint. `scipy.signal.convolve2d`
+<<<A
+# Answer
+
+# Sorry, no answer for a challenge exercise. Call me over and I will look at your solution and discuss it with you.

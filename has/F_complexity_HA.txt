@@ -1,0 +1,89 @@
+<<<H
+Hint. What kind of model is Logistic Regression? Under what conditions would it have 100% accuracy? Look at the scatter plot - do these conditions hold?
+<<<A
+# Answer.
+
+# It will underfit.
+
+# Logistic Regression is a linear model. 
+# It will only have 100% training error if the training set is linearly separable. 
+# The scatter plot shows that this dataset is not linearly separable.
+<<<H
+Hint. `check_fit`. When interpreting its results, remember you have accuracies, not errors.
+<<<A
+# Answer
+
+# In regression problems, if training error and validation error are both high, then we are underfitting.
+# But this is a classification problem, so we have accuracies, not errors. So underfitting is when both are low.
+# In this case, both are low (52%, 49%). So, yes, we are underfitting.
+
+train_acc, val_acc = check_fit(model=logistic_model, 
+            X_train=X_train, y_train=y_train, 
+            cv=10, metric="accuracy")
+
+train_acc, val_acc
+<<<H
+Hint. Since the original underfits, you need to make it more complex.
+<<<A
+# Answer
+
+# Use Polynomial Regression - this will increase the number of parameters.
+
+# Training accuracy and validation accuracy are now 100%.
+# The reason this is so successful are the new features that come from squaring x1 and x2.
+# If you create a scatter plot with these features, you will see that the problem has become linearly separable.
+
+from sklearn.preprocessing import PolynomialFeatures
+
+logistic_model = Pipeline([
+    ("poly", PolynomialFeatures(degree=2, include_bias=False)),
+    ("scaler", StandardScaler()),    
+    ("predictor", LogisticRegression(penalty=None, max_iter=300, random_state=rng))
+]) 
+
+logistic_model.fit(X_train, y_train)
+
+train_acc, val_acc = check_fit(model=logistic_model, 
+            X_train=X_train, y_train=y_train, 
+            cv=10, metric="accuracy")
+
+train_acc, val_acc
+<<<H
+Hint. check_fit. When interpreting its results, remember you have accuracies, not errors.
+<<<A
+# Answer
+
+# Again, this is a classification problem, so you have accuracies.
+# We're fitting the training data very well but the validation accuracy is much lower.
+# Hence, we are overfitting.
+
+train_acc, val_acc = check_fit(model=logistic_model, 
+            X_train=X_train, y_train=y_train, 
+            cv=10, metric="accuracy")
+
+train_acc, val_acc
+<<<H
+Hint. Since the original overfits, you need to make it less complex.
+<<<A
+# Answer
+
+# You could try Regularization.
+# But I asked you to do it with an extra line of code. 
+# Using PCA will allow us to reduce the number of features (and parameters) and reduce overfitting.
+# Any number of components up to about 10 seems to fix the problem, reducing the gap to one or two percent.
+
+from sklearn.decomposition import PCA
+
+logistic_model = Pipeline([
+    ("scaler", StandardScaler()),    
+    ("pca", PCA(n_components=6, random_state=rng)),
+    ("predictor", LogisticRegression(penalty=None, random_state=rng))
+]) 
+
+logistic_model.fit(X_train, y_train)
+
+train_acc, val_acc = check_fit(model=logistic_model, 
+            X_train=X_train, y_train=y_train, 
+            cv=10, metric="accuracy")
+
+train_acc, val_acc

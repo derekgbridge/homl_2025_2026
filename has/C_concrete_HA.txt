@@ -1,0 +1,98 @@
+<<<A
+# Answer
+
+# Regression: predicting a numeric value - the strength of the concrete.
+# So we will use mean absolute errror as performance metric.
+# We can compare against a dummy regressor - one that simply predicts the mean strength of the training examples.
+<<<A
+# Answer. One code cell for each of these:
+# df.head()
+# df.shape
+# df.info()
+# df.describe(include="all")
+<<<A
+# Answer
+
+features = ["cement", "slag", "fly_ash", "water", "superplasticizer", "coarse_aggregate", "fine_aggregate", "age"]
+
+train, test = train_test_split(df, test_size=0.2, random_state=rng)
+
+X_train = train[features]
+X_test = test[features]
+y_train = train["strength"]
+y_test = test["strength"]
+<<<A
+# Answer
+
+train_copy = train.copy()
+
+scatter_matrix(train_copy, figsize=(10, 10))
+plt.show()
+<<<A
+# Answer
+
+sns.heatmap(train_copy.corr(numeric_only=True), annot=True)
+plt.show()
+<<<A
+# Answer
+
+# You will have written classes that are similar to the one shown above.
+<<<A
+# Answer. Your answer will be longer - because you will be including steps to insert all the lovely features you engineered.
+
+preprocessor = Pipeline([("cement_to_water", InsertCementToWaterRatio()),
+                         ("scaler", None)
+                        ])
+<<<A
+# Answer
+
+# The whole dataset is 1030 examples (the training set is a little over 800). This is small, so we use k-fold CV.
+<<<A
+# Answer
+
+dummy = DummyRegressor()
+
+dummy.fit(X_train, y_train)
+
+np.mean(cross_val_score(dummy, X_train, y_train, scoring="neg_mean_absolute_error", cv=10))
+<<<A
+# Answer
+
+knn_gs = grid_search(
+    preprocessor = preprocessor, 
+    predictor = KNeighborsRegressor(),
+    param_grid = {
+        "preprocessor__cement_to_water__insert": [True, False],
+        "preprocessor__scaler" : [None, MinMaxScaler(), RobustScaler(), StandardScaler()],
+        "predictor__n_neighbors": range(1, 11) ,
+        "predictor__weights" : ["uniform", "distance"]
+    },
+    cv = 10,
+    metric = "neg_mean_absolute_error",
+    X_train = X_train,
+    y_train = y_train
+)
+
+knn_gs.best_params_, knn_gs.best_score_
+<<<A
+# Answer 
+
+decision_tree_gs = grid_search(
+    preprocessor = preprocessor, 
+    predictor = DecisionTreeRegressor(random_state=rng),
+    param_grid = {
+        "preprocessor__cement_to_water__insert": [True, False],
+        "preprocessor__scaler" : [None],
+        "predictor__max_depth": range(1, 11)                 
+    },
+    cv = 10,
+    metric = "neg_mean_absolute_error",
+    X_train = X_train,
+    y_train = y_train
+)
+
+decision_tree_gs.best_params_, decision_tree_gs.best_score_
+<<<A
+# Answer
+
+mean_absolute_error(knn_gs.best_estimator_.predict(X_test), y_test)

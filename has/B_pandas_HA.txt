@@ -1,0 +1,68 @@
+<<<H
+Hint. Don't write a loop! Extract the relevant column and do an elementwise comparison.
+<<<A
+# Answer
+
+df["Object-of-search"] == "Stolen goods"
+<<<H
+Hint. Use Boolean indexing with your answer to the previous exercise.
+<<<A
+# Answer
+
+df[ df["Object-of-search"] == "Stolen goods" ]
+<<<H
+Hint. There are many ways of doing this. You can use your answer to the previous exercise and get its length or the first part of its shape. Or you can use your answer to the first exercise: Python treats True and False as 1 and 0.
+<<<A
+# Answer
+
+# Here are at least three solutions. The third of these solution is the fastest.
+
+# Extract a DataFrame of "Stolen goods" and return its length (number of rows)
+# len( df[ df["Object-of-search"] == "Stolen goods"] ) 
+
+# Extract a DataFrame of "Stolen goods, get its shape - which is a tuple, the first part of which is the number of rows
+# df[ df["Object-of-search"] == "Stolen goods"].shape[0]
+
+# Get a Series of Booleans - where True is for "Stolen goods', and sum the Booleans (True is treated as 1, False as 0)
+(df["Object-of-search"] == "Stolen goods").sum()
+<<<H
+Hint. You need to count the number of stop-and-searches that result in an arrest.  Do this in a way that is very similar to the previous question. Then you divide by the total number of stop-and-searches.
+<<<A
+# Answer
+
+# Here are at least three solutions. The third of these is the fastest.
+
+# len( df[df["Outcome"] == "Arrest"] ) / len(df)
+
+# df[ df["Outcome"] == "Arrest" ].shape[0] / len(df)
+
+(df["Outcome"] == "Arrest").sum() / len(df)
+<<<H
+Hint. You'll need to use & (and) and | (or).
+<<<A
+# Answer
+
+# We can do this in a single line of code. But to make it clearer, I will break it into three lines of code.
+
+# A Boolean expression for a white officer
+
+white_officer = df["Officer-ethnicity"] == "White"
+
+# A Boolean expression for a white suspect
+
+white_suspect = (df["Suspect-ethnicity"] == "White - English/Welsh/Scottish/Northern Irish/British") | \
+    (df["Suspect-ethnicity"] == "White - Any other White background") | \
+    (df["Suspect-ethnicity"] == "White - Irish")
+
+# Now Boolean indexing to extract white-on-white stop-and-searches
+
+df[white_officer & white_suspect]
+<<<H
+Hint. Sorry, no hints.
+<<<A
+# Answer
+
+# Sorry, no answer for this exercise. 
+# There are numerous ways of answering this question.
+# Call me over and I will look at your solution and discuss it with you. 
+# We will also take time at the end of the session to discuss solutions.
