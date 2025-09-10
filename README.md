@@ -66,14 +66,13 @@ If activation is successful, you'll see the name of the environment before the p
 
 6. Check the Python modules are installed by typing:
 ```
-(venv) $ python3 -c "import matplotlib, numpy, pandas, scipy, sklearn, seaborn, ipympl, tensorflow, keras, keras_cv, keras_tuner, keras_nlp, nltk, imbalanced_learn"
+(venv) $ python3 -c "import matplotlib, numpy, pandas, scipy, sklearn, seaborn, ipympl, tensorflow, keras, keras_cv, keras_tuner, keras_nlp, nltk, imblearn"
 ```
 Make sure there are no error messages. (Depending on your hardware, there may be a message about Tensorflow being optimized for CPUs but that's OK.)
 
 7. Deactivate the virtual environment either by closing the terminal or by typing:
 ```
-(venv) $ deactivate # on Linux/macOS
-(venv) $ .\venv\Scripts\deactivate # on Windows
+(venv) $ deactivate # on Linux/macOS/Windows
 ```
 If you are successful, the environment name disappears from the prompt:
 ```
