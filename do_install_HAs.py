@@ -5,7 +5,7 @@ from IPython.display import display, Markdown
 def initialize():
     nb_filename = sys.argv[1]
     (root, ext) = os.path.splitext(nb_filename)
-    ha_filename = root + "_HA.txt"
+    ha_filename = root[:-4] + "_HA.txt"
     ha_pathname = os.path.join(os.getcwd(), "has", ha_filename)
     if not os.path.exists(ha_pathname):
         display(Markdown(f"Error! I'm looking for a file called '{ha_filename}' in the 'has' folder. Make sure this file exists and re-run this cell. Hints and answers will not be available until this has been done."))
