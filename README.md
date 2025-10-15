@@ -61,7 +61,7 @@ If activation is successful, you'll see the name of the environment before the p
 
 5. Install the packages we need by typing:
 ```
-(venv) $ pip install -U notebook matplotlib numpy pandas scipy scikit-learn seaborn ipympl keras tensorflow keras-cv keras-tuner keras-nlp nltk imbalanced-learn
+(venv) $ pip install -r requirements.txt
 ```
 
 6. Check the Python modules are installed by typing:
